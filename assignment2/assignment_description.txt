@@ -1,0 +1,16 @@
+Due Date: Monday 29 Oct 2018
+
+This assignment builds on Assignment 1. Its goal is to construct either learning curves or ROC curves for the two classification algorithms that you used in Assignment 1, using the same dataset as before, and to show what you can discover from examining them. If you prepare learning curves, they must plot the classification accuracy on a held-out test set as a function of training dataset size. If you prepare ROC curves, they must be plotted using a held-out test set of approximately 1/3 of the overall dataset size.
+
+You are welcome to use the same ML software package that you used for Assignment 1. If you change to a different software package, it must support the same classification algorithms that you chose for Assignment 1.
+
+Depending on what ML software package you use, you may be able to use its built-in functionality to construct the learning curves / ROC curves, or you may have to write some code, or do it semi-manually.
+
+This assignment will be marked out of 10, with the breakdown of marks outlined below. You must submit a report of 2-3 pages in length, with:
+
+    A description of your methodology to construct the curves, including the assumptions you made and the procedures that you followed. If using a package that does the work for you, explain what it does in sufficient detail to demonstrate your clear understanding of it [4 marks].
+    Graphs of the curves for each of the two algorithms [1.5 x2 = 3 marks].
+    A discussion of your observations from examining the two curves, individually and/or taken together:
+        If you produced learning curves, you must make 6 separate observations and will score up to 0.5 marks for each observation that is appropriately discussed and backed up by evidence [0.5 x6 = 3 marks].
+        Alternatively, if you produced ROC curves, you must make 3 separate observations and will score up to 1.0 marks for each observation that is appropriately discussed and backed up by evidence [1.0 x3 = 3 marks].
+
