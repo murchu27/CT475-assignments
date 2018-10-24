@@ -1,11 +1,11 @@
 import numpy as np
 import os
 import matplotlib.pyplot as plt
-from sklearn import neighbors, datasets, svm, ensemble
+from sklearn import neighbors, datasets, svm
 from sklearn.model_selection import cross_val_score
+from sklearn.metrics import roc_curve, auc
 
 #change into location of dataset, specify file name
-os.chdir('D:\\OneDrive - National University of Ireland, Galway\\NUIG\\2018-2019\\Semester 1\\CT475\\Assignment 1')
 fname = 'autoimmune_transpose.txt'
 
 #use np.genfromtxt to read in training data, and target feature data
