@@ -75,7 +75,7 @@ for train, test in cv.split(X, y):
     tprs[-1][0] = 0.0
     roc_auc = auc(fpr, tpr)
     aucs.append(roc_auc)
-    plt.plot(fpr, tpr, lw=1, alpha=0.3,
+    plt.plot(fpr, tpr, lw=3, alpha=0.3,
              label='ROC fold %d (AUC = %0.2f)' % (i, roc_auc))
 
     i += 1
