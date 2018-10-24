@@ -94,18 +94,7 @@ for train, test in kf.split(autoimmune_data, autoimmune_target):
 	#increment current split index
     i += 1
 
-"""
-print("[i]. Split 1                 Split 2                Split 3", end='')
-for i in range(len(kprobas_)):
-    print("\n%i. " % i, end='')
-    for p in kprobs:
-        print(p[i], end='    ')
-
-print("\n\nSplit 3 probabilities        Actuals")
-for i in range(len(kprobas_)):
-    print(kprobas_[i], autoimmune_target[test[i]], sep='          ')
-"""
-
+#apply labels, legend, and grid to each graph
 plt.figure(1)
 plt.xlim([-0.05, 1.05])
 plt.ylim([-0.05, 1.05])
