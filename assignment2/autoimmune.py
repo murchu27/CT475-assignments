@@ -87,7 +87,7 @@ for train, test in kf.split(autoimmune_data, autoimmune_target):
     kaucs.append(roc_auc) #store the AUROC score for this fold
     plt.figure(1) #figure 1 is kNN curves
     plt.plot(kfpr, ktpr, lw=1, alpha=0.3,
-             label="ROC fold %d (AUC = %0.2f) \n#Positive test samples: %d \n#Negative test samples: %d" % (fold, roc_auc, num_pos, num_neg))
+             label="ROC fold %d (AUC = %0.3f) \n#Positive test samples: %d \n#Negative test samples: %d" % (fold, roc_auc, num_pos, num_neg))
 
     #repeat all these steps for SVM
     sprobas_ = svc.fit(autoimmune_data[train], autoimmune_target[train]).predict_proba(autoimmune_data[test])
@@ -98,7 +98,7 @@ for train, test in kf.split(autoimmune_data, autoimmune_target):
     saucs.append(roc_auc)
     plt.figure(2) #figure 2 is SVM curves
     plt.plot(sfpr, stpr, lw=1, alpha=0.3,
-             label="ROC fold %d (AUC = %0.2f) \n#Positive test samples: %d \n#Negative test samples: %d" % (fold, roc_auc, num_pos, num_neg))
+             label="ROC fold %d (AUC = %0.3f) \n#Positive test samples: %d \n#Negative test samples: %d" % (fold, roc_auc, num_pos, num_neg))
 
     #next ROC fold, reset num_pos & num_neg, increment fold
     num_pos,num_neg=0,0
@@ -108,17 +108,28 @@ for train, test in kf.split(autoimmune_data, autoimmune_target):
 #first for kNN
 mean_tpr = np.mean(ktprs, axis=0)
 mean_auc = auc(mean_fpr, mean_tpr) #also calculate AUROC score for these mean tpr/fpr values
+
+#find how close to the ideal it gets
+dists_to_ideal = []
+for i in range(len(mean_tpr)):
+	dists_to_ideal.append(np.sqrt((1-mean_tpr[i])**2 + (0-mean_fpr[i])**2))
+
+#plot mean curve
 plt.figure(1)
 plt.plot(mean_fpr, mean_tpr, color='b', #finally, plot the mean curve
-         label="Mean ROC (AUC = %0.2f)" % (mean_auc),
+         label="Mean ROC (AUC = %0.3f) \nMinimum distance to ideal: %0.3f" % (mean_auc, min(dists_to_ideal)),
          lw=3, alpha=.8)
+
 
 #then for SVM
 mean_tpr = np.mean(stprs, axis=0)
 mean_auc = auc(mean_fpr, mean_tpr)
+dists_to_ideal = []
+for i in range(len(mean_tpr)):
+	dists_to_ideal.append(np.sqrt((1-mean_tpr[i])**2 + (0-mean_fpr[i])**2))
 plt.figure(2)
 plt.plot(mean_fpr, mean_tpr, color='b',
-         label="Mean ROC (AUC = %0.2f)" % (mean_auc),
+         label="Mean ROC (AUC = %0.3f) \nMinimum distance to ideal: %0.3f" % (mean_auc, min(dists_to_ideal)),
          lw=3, alpha=.8)
 
 
