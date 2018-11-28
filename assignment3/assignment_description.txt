@@ -1,0 +1,68 @@
+CT475 Assignment 3 Description
+
+Due Date: Friday 30 November 2018 (last day of term)
+
+Overview:
+
+The goal of this assignment is to select, implement and evaluate a machine learning algorithm. You may choose any classification algorithm, whether we have covered it in lectures or not, except for k-Nearest Neighbours, Naïve Bayes, or rather trivial ones such as ZeroR or 1R.
+
+Here are some algorithms you could consider: C4.5; CART; Tree Augmented Naïve Bayes; Logistic Regression; Perceptron; Linear SVM; Decision Rules; Adaboost. You can even design your own, but avoid simple prototype-based algorithms that just compute an average or region of interest and compare new cases with it.
+
+You are encouraged to do this assignment in a pair. See below for my policy on 2-person assignments.
+
+Note that this assignment is likely to involve effort over the full period that you have to do it.
+
+Implementation Details:
+
+    You may use any programming/scripting language you wish, but it must be entirely your own work, NOT based in any part on an implementation found elsewhere.
+    You can use libraries for basic operations such as multiplying or inverting matrices, and for non-core operations such as plotting, but the implementation of your algorithm must be “from scratch” – you cannot just call an existing implementation in a library, nor modify/extend one.
+    You may make any reasonable design decisions, and should document them (e.g. distance metric if kNN were allowed).
+    It must be possible to input training data and testing data to your program, for example from a file or files, in a reasonable format of your choosing. Your program must be able to handle different numbers of attributes and training cases. For testing data, it must be able to output predicted and actual values to a file.
+
+To Test Your Program:
+
+    You will be provided with a file called “owls.csv”.
+    Each line describes one type of Owl found in Ireland: body-length, wing-length, body-width, wing-width, type.
+    There are three types: Barn Owl, Snowy Owl & Long-Eared Owl. Your classifier is to distinguish between them.
+    You (or your program) should randomly divide the file into 2/3 for training, 1/3 for testing. The training data are the cases your machine learning algorithm will use. It will attempt to classify the testing cases, and should compute the accuracy of classifications.
+    This procedure should be repeated with different random divisions 10 times, and the individual results and average accuracy reported.
+
+Report Contents (approximately 2-4 pages + code):
+
+    Names of the one or two team members, and class (4BCT, 4BP, …)
+    A description of your algorithm and design decisions
+    Your tests and results
+    Conclusions and observations
+    If a 2-person assignment, exactly what each person was responsible for
+    Your code, attached as an appendix.]
+    Note: if your report is excessively long, I reserve the right to stop reading/grading after 5+ pages.
+
+Submit Two Items to Turnitin:
+
+    Your report (including your code as an appendix) as a single PDF file
+    A zip file with all of your code.
+
+Policy on Two-Person Submissions:
+
+    You can work in pairs, but you cannot collaborate with other people in the class beyond that.
+    Your report documentation must include a section detailing what contributions each person made. It is not sufficient to say something along the lines of “we both worked on everything together”: if you worked on some parts together, then please say so, but also identify the parts that you did separately (and there must be some).
+    Each person must do some of the coding. There must be comments (e.g, on every function) so that it is clear for every line of code who was responsible for it. I will not accept any statements that two people worked on one line of code.
+    I expect that people on a 2-person assignment each put in as much work as a person on a one-person assignment would.
+    Across all parts of the assignment, I may award different marks to each person doing a 2-person assignment, if I feel that their contributions are not of equal value.
+    If each person’s contribution is not sufficiently clear, you are both likely to lose marks. Since the class is so large, I will not be able to get back to you to ask for clarification on who did what.
+    To avoid any version conflicts, only one of the two people must submit the assignment via Blackboard. It is therefore important to have both contributors' names and IDs on the report and code.
+
+Policy on Plagiarism:
+
+As you are all final year or postgraduate students, I will treat any plagiarism (from another student or other sources) very seriously. If any aspect of your work is plagiarised or is otherwise dishonest, you will receive 0 for the full assignment.
+
+Marking Scheme:
+
+This assignment will carry a higher weight than the previous ones. Marks breakdown (out of 15):
+
+    Implementation: 2 for code with significant flaws; 7 for fully correct code; or in between.
+    Testing: 0 for no testing or couldn’t get it to work; 3 for high quality and comprehensive tests
+    Detailed report documenting all aspects as specified above: 3
+    Particularly high quality implementation and report: 2.
+
+A “particularly high quality” implementation may meet the criterion for one of many reasons, e.g.: very comprehensive in the algorithm options; nice user interface; a complex ML algorithm; an interesting choice of language or other implementation choice; or others.
