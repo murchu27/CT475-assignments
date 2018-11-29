@@ -1,3 +1,4 @@
+import pandas as pd
 import numpy as np
 #user interface to read in file
 #should ask for number of classes
@@ -16,8 +17,10 @@ class binarySVM:
 		self.normal = np.zeros(features)
 		self.intercept = 0 
 
-	def train(self, traindata, trainclass, pos_label):
-		data = np.array(1)
+	def train(self, data, target, pos_label):
+		self.data = data
+		self.target = target
+		
 
 	def predict(self, predictdata):
 		#to be written by Mark	
@@ -39,11 +42,25 @@ def testbinSVM():
 	#assert b.omega_zero == 0
 
 def main():
-	f = 'owls.csv'
-	filef = open(f)
-	print(filef.readline())
+	owl_features = 4
+	owls = pd.read_csv('owls.csv').values
+	data = owls[:,:owl_features]
+	target = owls[:,owl_features]
+	#for i in range(len(owls)):
+	#	print(data[i], target[i], sep='\t')
+
+	ai_features = 9 
+	ai_label = 'positive'
+	ai = pd.read_table('autoimmune_transpose.txt').values
+	d = ai[:,:ai_features]
+	t = ai[:,ai_features]
+	#for i in range(len(ai)):
+	#	print(d[i], t[i], sep='\t')
+
 	testbinSVM()
 
-
+	ai_model = binarySVM(ai_features)
+	ai_model.train(d,t,ai_label)
+	
 if __name__ == "__main__":
 	main()
