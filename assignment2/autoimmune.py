@@ -91,6 +91,7 @@ for train, test in kf.split(autoimmune_data, autoimmune_target):
 
     #repeat all these steps for SVM
     sprobas_ = svc.fit(autoimmune_data[train], autoimmune_target[train]).predict_proba(autoimmune_data[test])
+    sother = svc.fit(autoimmune_data[train], autoimmune_target[train]).predict(autoimmune_data[test])
     sfpr, stpr, sthresholds = roc_curve(y_true=autoimmune_target[test], y_score=sprobas_[:, 1], pos_label="positive")
     stprs.append(interp(mean_fpr, sfpr, stpr))
     stprs[-1][0] = 0.0
