@@ -26,7 +26,7 @@ class binarySVM:
 		sv = self.find_sv()
 
 		# sv[i] contains pairs of class A/B of support vectors indices with minimum distance 
-		if self.target[sv[0][0]] == pos_label:
+		if self.target[sv[0]] == pos_label:
 			pos_sv_index = 0
 			neg_sv_index = 1
 		else:
@@ -35,8 +35,8 @@ class binarySVM:
 
 		#normal is parallel to line connecting sv pairs 		
 		#for now, arbitrarily choose first pair of vectors
-		pos_sv = self.data[sv[0][pos_sv_index]]
-		neg_sv = self.data[sv[0][neg_sv_index]]
+		pos_sv = self.data[sv[pos_sv_index]]
+		neg_sv = self.data[sv[neg_sv_index]]
 
 		normal_weights = pos_sv-neg_sv
 
@@ -63,7 +63,7 @@ class binarySVM:
 	def find_sv(self):
 		#find minimum distance between points in the two classes
 		m = -1
-		min_samples = []
+		min_sample = (0,0)
 		l = len(self.data)
 
 		#iterate over all samples in the training data
@@ -73,23 +73,21 @@ class binarySVM:
 			#we compare this sample with all the samples of the opposite label
 			for j in range(i+1,l): #start from i+1 so as not to compare to self, or to previously checked samples
 				#check if this sample has the opposite label
-				if self.target[j] != self.target[i]:
+				if (self.target[j] == self.pos_label and self.target[i] != self.pos_label) or (self.target[j] != self.pos_label and self.target[i] == self.pos_label):
 					other = self.data[j]
 					
 					#check the distance between the samples
 					d = np.linalg.norm(sample - other)
 					
 					#see if less than or equal to previous minimum (if greater than previous minimum, do nothing)
-					if (d <= m) or (m == -1): #m = -1 at very beginning
+					if (d < m) or (m == -1): #m = -1 at very beginning
 						#if less than previous min, scrap the min_samples to this point, and instead add these samples
 						#if equal to previous min, change nothing, but do add samples to min_samples    
-						if (d < m) or (m == -1):
-							min_samples.clear()
-							m = d
-						min_samples.append((i,j))
+						m = d
+						min_sample = (i,j)
 
 		#now, min_samples_A and min_samples_B contains the samples of class A and B (respectively) to be used as support vectors
-		return(min_samples)
+		return(min_sample)
 
 	def predict(self, predictdata):
 		#explanation of steps
@@ -112,11 +110,13 @@ class binarySVM:
 		#come back to this if there is time
 
 		predicttarget = np.array([])
+		self.distances = np.array([])
 		unsure = 0
+		x = True
 
 		for u in predictdata:
 			f = np.dot(self.normal, u) + self.intercept
-			
+
 			if f >= 1:
 				predicttarget = np.append(predicttarget, self.pos_label)
 			elif f <= -1:
@@ -124,6 +124,14 @@ class binarySVM:
 			else:
 				predicttarget = np.append(predicttarget, "unsure")
 				unsure += 1
+
+			y = np.sign(f)
+			self.distances = np.append(self.distances, y*(f)/np.linalg.norm(self.normal))
+			if x:
+				print(self.normal)
+				x=False
+
+		#print(self.distances)
 
 		return predicttarget
 
@@ -166,29 +174,22 @@ class multiclassSVM:
 	# 	#seems to make a lot of false classfications atm
 	# 	#come back to this if there is time
 
+		# predicttargets = np.array([])
+		predicttargets = []
+
 		for model in self.models:
-			
-			
-	# 	predicttarget = np.array([])
-	# 	#print(predicttarget)
-	# 	unsure = 0
-	# 	print(len(predictdata))
+			# predicttargets = np.append(predicttargets, model.predict(predictdata))
+			predicttargets.append(model.predict(predictdata))
 
-	# 	for u in predictdata:
-	# 		f = np.dot(self.normal, u) + self.intercept
-			
-	# 		if f >= 1:
-	# 			predicttarget = np.append(predicttarget, self.pos_label)
-	# 		elif f <= -1:
-	# 			predicttarget = np.append(predicttarget, self.neg_label)
-	# 		else:
-	# 			predicttarget = np.append(predicttarget, "unsure")
-	# 			unsure += 1
+		# print(predicttargets)
+		for i in range(len(predicttargets[0])):
+			d = 0
+			for j in range(d+1, self.c):
+				if self.models[j].distances[i] < self.models[d].distances[i]:
+					d = j
+					print(i, "||", predicttargets[0][i], ": ", self.models[0].distances[i], "||", predicttargets[1][i], ": ", self.models[1].distances[i], "||", predicttargets[2][i], ": ", self.models[2].distances[i], "||")
 
-	# 	# print(unsure)
-	# 	# print(predicttarget)
 
-	# 	return predicttarget
 
 #determine how to split given dataset
 #also how to repeat this 10 times
@@ -215,13 +216,14 @@ def main():
 	train_data = data[train_index]
 	train_target = target[train_index]
 	
-	test_index = np.array(list(range(31,45)) + list(range(76,90)) + list(range(121,135)))
+	test_index = np.array(list(range(30,45)) + list(range(75,90)) + list(range(120,135)))
 	test_data = data[test_index]
-
+	
 	owls_model = multiclassSVM(3, owl_features)
 	owls_model.train(train_data,train_target,owls_classes)
-	#a = ai_model.predict(test_data)
+	p = owls_model.predict(test_data)
 
+	"""
 	ai_features = 9 
 	ai_plabel = 'positive'
 	ai_nlabel = 'negative'
@@ -244,6 +246,7 @@ def main():
 	a = ai_model.predict(test_data)
 	# for i in range(len(a)):
 	# 	print(a[i], t[test_index[i]])
+	"""
 
 
 	
